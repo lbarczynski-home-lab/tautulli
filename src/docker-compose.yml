@@ -1,0 +1,20 @@
+services:
+    tautulli:
+        container_name: tautulli
+        image: ghcr.io/tautulli/tautulli:v2.15.3
+        volumes:
+            - ./config:/config
+        environment:
+            - PUID=1000
+            - PGID=988
+            - TZ=Europe/Warsaw
+        ports:
+            - ${TAUTULLI_WEB_UI_PORT}:${TAUTULLI_WEB_UI_PORT}
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.tautulli-router.rule=Host(`${TAUTULLI_DOMAIN}`)"
+            - "traefik.http.routers.tautulli-router.entrypoints=websecure"
+            - "traefik.http.routers.tautulli-router.tls=true"
+            - "traefik.http.routers.tautulli-router.service=tautulli"
+            - "traefik.http.services.tautulli.loadbalancer.server.url=${TAUTULLI_SCHEMA}://${TAUTULLI_HOST}:${TAUTULLI_WEB_UI_PORT}"
+        restart: unless-stopped
