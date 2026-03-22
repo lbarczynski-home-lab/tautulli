@@ -8,10 +8,6 @@ services:
             - PUID=${PUID:?err}
             - PGID=${PGID:?err}
             - TZ=${TIME_ZONE:?err}
-            - PLEX_URL=${PLEX_URL:?err}
-            - PLEX_TOKEN=${PLEX_TOKEN:?err}
-            - TAUTULLI_URL=http://${TAUTULLI_HOST:?err}:${TAUTULLI_WEB_UI_PORT}
-            - TAUTULLI_PUBLIC_URL=https://${TAUTULLI_DOMAIN:?err}
         ports:
             - ${TAUTULLI_WEB_UI_PORT:?err}:${TAUTULLI_WEB_UI_PORT:?err}
         labels:
