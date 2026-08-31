@@ -17,6 +17,9 @@ services:
             - "traefik.http.routers.tautulli-router.tls=true"
             - "traefik.http.routers.tautulli-router.service=tautulli"
             - "traefik.http.services.tautulli.loadbalancer.server.url=${TAUTULLI_SCHEMA:?err}://${TAUTULLI_HOST:?err}:${TAUTULLI_WEB_UI_PORT:?err}"
+            - 'wud.watch=true'
+            - 'wud.tag.include=^v\d+\.\d+\.\d+$$'
+            - "wud.link.template=https://github.com/Tautulli/Tautulli/releases/tag/v$${major}.$${minor}.$${patch}"
         networks:
             - tautulli
             - proxy
