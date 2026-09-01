@@ -1,28 +1,27 @@
 services:
     tautulli:
         container_name: tautulli
-        image: ghcr.io/tautulli/tautulli:${TAUTULLI_VERSION:?err}
+        image: ghcr.io/tautulli/tautulli:v2.18.1
         volumes:
             - config:/config
         environment:
-            - PUID=${PUID:?err}
-            - PGID=${PGID:?err}
-            - TZ=${TIME_ZONE:?err}
+            - PUID=1000
+            - PGID=988
+            - TZ=Europe/Warsaw
         ports:
-            - ${TAUTULLI_WEB_UI_PORT:?err}:${TAUTULLI_WEB_UI_PORT:?err}
+            - "8181:8181"
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.tautulli-router.rule=Host(`${TAUTULLI_DOMAIN:?err}`)"
+            - "traefik.http.routers.tautulli-router.rule=Host(`tautulli.intranet.xbhl.online`)"
             - "traefik.http.routers.tautulli-router.entrypoints=websecure"
             - "traefik.http.routers.tautulli-router.tls=true"
             - "traefik.http.routers.tautulli-router.service=tautulli"
-            - "traefik.http.services.tautulli.loadbalancer.server.url=${TAUTULLI_SCHEMA:?err}://${TAUTULLI_HOST:?err}:${TAUTULLI_WEB_UI_PORT:?err}"
+            - "traefik.http.services.tautulli.loadbalancer.server.port=8181"
             - "traefik.docker.network=proxy"
             - 'wud.watch=true'
             - 'wud.tag.include=^v\d+\.\d+\.\d+$$'
             - "wud.link.template=https://github.com/Tautulli/Tautulli/releases/tag/v$${major}.$${minor}.$${patch}"
         networks:
-            - tautulli
             - proxy
         restart: unless-stopped
 
@@ -30,7 +29,5 @@ volumes:
     config:
 
 networks:
-    tautulli:
-        name: tautulli-internal-network
     proxy:
         external: true
