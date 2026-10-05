@@ -1,5 +1,5 @@
 # Tautulli
-### v2.16.1
+### v2.18.2
 
 Configuration of my selfhosted [Tautulli](https://tautulli.com/) instance.
 
