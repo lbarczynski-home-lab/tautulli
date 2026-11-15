@@ -32,6 +32,6 @@ flowchart LR
 ## Upgrades & Maintenance
 
 - **Upstream & Wrapper Sources**: Upstream releases at `https://github.com/Tautulli/Tautulli/releases` (tracked via `wud.link.template`).
-- **Version & Flavor Constraints**: Official first-party `ghcr.io/tautulli/tautulli` image (not `lscr.io/linuxserver/tautulli`) pinned to `v`-prefixed SemVer tags (`^v\d+\.\d+\.\d+$`) with embedded SQLite.
+- **Version & Flavor Constraints**: Official first-party `ghcr.io/tautulli/tautulli` image (not `lscr.io/linuxserver/tautulli`) pinned to `v`-prefixed SemVer tags (`^v\d+\.\d+\.\d+$$`) with embedded SQLite.
 - **Intentional Choices (Do Not Propose)**: Inline container user/timezone config with no `.env` file or `TAUTULLI_*` overrides; omits `authelia@file` middleware and keeps host port `8181:8181` for Plex OAuth, Gatus, and Homepage API access; relies on the upstream image `HEALTHCHECK` without a custom Compose `healthcheck:`.
 - **Upgrade & CI Gotchas**: Both CI (`verify:tautulli:healthcheck`) and Gatus (`tautulli-container-status`) assert `.State.Health.Status == "healthy"` via the inherited upstream `Dockerfile` `HEALTHCHECK` (`localhost:8181/status`); add an explicit Compose `healthcheck` if upstream changes or drops it.
